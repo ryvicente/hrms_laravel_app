@@ -29,7 +29,7 @@
                 <a href="{{ url('/employees/create') }}" class="flex items-center px-4 py-2 rounded-md hover:bg-gray-700 @if(request()->is('employees/create')) bg-gray-900 @endif">
                     <i class="fas fa-user-plus mr-3"></i> Add Employees
                 </a>
-                <a href="#" class="flex items-center px-4 py-2 rounded-md hover:bg-gray-700">
+                <a href="{{ url('/leave-management') }}" class="flex items-center px-4 py-2 rounded-md hover:bg-gray-700">
                     <i class="fas fa-calendar-alt mr-3"></i> Leave Management
                 </a>
                  <a href="{{ url('/payroll') }}" class="flex items-center px-4 py-2 rounded-md hover:bg-gray-700 @if(request()->is('payroll')) bg-gray-900 @endif">

@@ -59,7 +59,7 @@
     <!-- Finalize Action -->
      <div class="flex justify-end">
         <button class="bg-green-600 text-white px-8 py-3 rounded-lg shadow-md hover:bg-green-700 flex items-center font-semibold">
-            <i class="fas fa-check-circle mr-2"></i> Finalize Payroll for 42 Employees
+            <i class="fas fa-check-circle mr-2"></i> Finalize Payroll for 2 Employees
         </button>
     </div>
 </div>
