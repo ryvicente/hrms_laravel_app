@@ -40,9 +40,12 @@
                 </a>
             </nav>
             <div class="p-4 border-t border-gray-700">
-                <a href="#" class="flex items-center w-full px-4 py-2 rounded-md hover:bg-gray-700">
-                    <i class="fas fa-sign-out-alt mr-3"></i> Log Out
-                </a>
+                <form action="{{ route('logout') }}" method="POST" class="m-0">
+                    @csrf
+                    <button type="submit" class="flex items-center w-full px-4 py-2 rounded-md hover:bg-gray-700 text-left">
+                        <i class="fas fa-sign-out-alt mr-3"></i> Log Out
+                    </button>
+                </form>
             </div>
         </aside>
 
