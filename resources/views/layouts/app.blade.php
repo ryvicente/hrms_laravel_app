@@ -20,24 +20,29 @@
                 HRMS
             </div>
             <nav class="flex-1 px-4 py-6 space-y-2">
-                <a href="{{ url('/dashboard') }}" class="flex items-center px-4 py-2 rounded-md hover:bg-gray-700 @if(request()->is('dashboard')) bg-gray-900 @endif">
-                    <i class="fas fa-tachometer-alt mr-3"></i> Dashboard
-                </a>
-                <a href="{{ url('/employees') }}" class="flex items-center px-4 py-2 rounded-md hover:bg-gray-700 @if(request()->is('employees')) bg-gray-900 @endif">
-                    <i class="fas fa-users mr-3"></i> Employees
-                </a>
-                <a href="{{ url('/employees/create') }}" class="flex items-center px-4 py-2 rounded-md hover:bg-gray-700 @if(request()->is('employees/create')) bg-gray-900 @endif">
-                    <i class="fas fa-user-plus mr-3"></i> Add Employees
-                </a>
-                <a href="{{ url('/leave-management') }}" class="flex items-center px-4 py-2 rounded-md hover:bg-gray-700">
-                    <i class="fas fa-calendar-alt mr-3"></i> Leave Management
-                </a>
-                 <a href="{{ url('/payroll') }}" class="flex items-center px-4 py-2 rounded-md hover:bg-gray-700 @if(request()->is('payroll')) bg-gray-900 @endif">
-                    <i class="fas fa-money-check-alt mr-3"></i> Payroll
-                </a>
-                <a href="#" class="flex items-center px-4 py-2 rounded-md hover:bg-gray-700">
-                    <i class="fas fa-file-alt mr-3"></i> Documents
-                </a>
+                @if(auth()->check() && auth()->user()->role === 'accountant')
+                    <!-- Show only Payroll for accountant -->
+                    <a href="{{ url('/payroll') }}" class="flex items-center px-4 py-2 rounded-md hover:bg-gray-700 @if(request()->is('payroll')) bg-gray-900 @endif">
+                        <i class="fas fa-money-check-alt mr-3"></i> Payroll Management
+                    </a>
+                @else
+                    <!-- Show regular menu items for other roles -->
+                    <a href="{{ url('/dashboard') }}" class="flex items-center px-4 py-2 rounded-md hover:bg-gray-700 @if(request()->is('dashboard')) bg-gray-900 @endif">
+                        <i class="fas fa-tachometer-alt mr-3"></i> Dashboard
+                    </a>
+                    <a href="{{ url('/employees') }}" class="flex items-center px-4 py-2 rounded-md hover:bg-gray-700 @if(request()->is('employees')) bg-gray-900 @endif">
+                        <i class="fas fa-users mr-3"></i> Employees
+                    </a>
+                    <a href="{{ url('/employees/create') }}" class="flex items-center px-4 py-2 rounded-md hover:bg-gray-700 @if(request()->is('employees/create')) bg-gray-900 @endif">
+                        <i class="fas fa-user-plus mr-3"></i> Add Employees
+                    </a>
+                    <a href="{{ url('/leave-management') }}" class="flex items-center px-4 py-2 rounded-md hover:bg-gray-700">
+                        <i class="fas fa-calendar-alt mr-3"></i> Leave Management
+                    </a>
+                    <a href="#" class="flex items-center px-4 py-2 rounded-md hover:bg-gray-700">
+                        <i class="fas fa-file-alt mr-3"></i> Documents
+                    </a>
+                @endif
             </nav>
             <div class="p-4 border-t border-gray-700">
                 <form action="{{ route('logout') }}" method="POST" class="m-0">
@@ -59,8 +64,9 @@
                 <div class="relative">
                     <button class="flex items-center space-x-2">
                         <img src="https://placehold.co/40x40/E2E8F0/4A5568?text=A" alt="Admin" class="w-10 h-10 rounded-full">
-                        <span class="font-medium text-gray-700">Admin User</span>
-                        <i class="fas fa-chevron-down text-gray-500"></i>
+                        <span class="font-medium text-gray-700">{{ auth()->check() ? auth()->user()->name : 'HR' }}</span>
+                        <span class="text-sm text-gray-500 ml-1">({{ auth()->check() ? auth()->user()->role : '' }})</span>
+                        <i class="fas fa-chevron-down text-gray-500 ml-2"></i>
                     </button>
                     <!-- Dropdown for user settings would go here -->
                 </div>

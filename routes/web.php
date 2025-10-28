@@ -17,13 +17,19 @@ use Illuminate\Support\Facades\Hash;
 |
 */
 
-// Redirect root to dashboard
+// Redirect root based on role
 Route::get('/', function () {
+    if (auth()->check() && auth()->user()->role === 'accountant') {
+        return redirect('/payroll');
+    }
     return redirect('/dashboard');
 });
 
 // Dashboard Route
 Route::get('/dashboard', function () {
+    if (auth()->check() && auth()->user()->role === 'accountant') {
+        return redirect('/payroll');
+    }
     return view('dashboard');
 });
 
@@ -36,10 +42,15 @@ Route::get('/employees/create', function () {
     return view('employees.create');
 });
 
-// Payroll Route
-Route::get('/payroll', function () {
+// Payroll Routes
+Route::get('/payroll', function (Request $request) {
+    // Check if user is authenticated and is an accountant
+    if (!auth()->check() || auth()->user()->role !== 'accountant') {
+        return redirect('/dashboard')->with('error', 'Unauthorized access. Only accountants can access payroll management.');
+    }
+
     return view('payroll.index');
-});
+})->middleware('auth');
 
 // Leave Management Route
 Route::get('/leave-management', function () {
@@ -92,6 +103,7 @@ Route::post('register', function (Request $request) {
         'name' => $data['name'],
         'email' => $data['email'],
         'password' => Hash::make($data['password']),
+        'role' => 'employee', // default role
     ]);
 
     Auth::login($user);
